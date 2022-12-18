@@ -54,15 +54,30 @@ body {
   color: #fff;
   pointer-events: none;
   transition: .5s;
+  /* transform: translateY(30px);
+  transition: all 0.2s ease-in-out;  */
 }
 
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label {
+.login-box .user-box input:valid,
+.login-box .user-box input:focus {
+border-bottom-color: #03e9f4;
+outline: none;
+}
+
+.login-box .user-box input:focus + label,
+.login-box .user-box input:valid + label {
   top: -20px;
   left: 0;
   color: #03e9f4;
   font-size: 16px;
-}
+} 
+
+/* .login-box .user-box input:valid ~ label,
+.login-box .user-box input:focus ~ label {
+color: #03e9f4;
+font-size: 14px;
+transform: translateY(0);
+} */
 
 .login-box form a {
   position: relative;
