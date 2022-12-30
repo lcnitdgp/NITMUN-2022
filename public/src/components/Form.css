@@ -6,10 +6,11 @@ body {
   margin:0;
   padding:0;
   font-family: sans-serif;
-  background: linear-gradient(#2caac9, #18365a);
+  background-color: rgb(97, 46, 237); 
 }
 
 .login-box {
+  background-color: rgb(43, 30, 109);
   position: absolute;
   top: 50%;
   left: 50%;

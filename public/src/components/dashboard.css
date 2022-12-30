@@ -1,42 +1,44 @@
-.container th h1{
-    font-weight: bold;
-    font-size: 1em;
-    text-align: left;
-    color: #185875;
+table {
+    
+    min-width: max-content;
+    
+    border-collapse: separate;
+    border-spacing: 0px;    
+    
+}
+.table-filter {
+    border-radius: 5px;
 }
 
-.container td{
+table th{
+    position: sticky; 
+    top: 0px;
+    width: 500px;
+    
+    background-color: #133b5c;
+    color: rgb(241, 245, 179);
+    
+    text-align: center;
     font-weight: normal;
-    font-size: 1em;
+    font-size: 18px;
+    outline: 0.7px solid black;
+    border: 1.5px solid black;
+
+} 
+
+table th, table td {
+    
+    padding: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
 }
 
-.container{
+table td {
     text-align: left;
-    overflow: hidden;
-    width: 80%;
-    margin: 0 auto;
-    display: table;
-    padding: 0 0 8em 0;
-}
-
-.container td, .container th {
-    padding-bottom: 2%;
-    padding-top: 2%;
-    padding-left: 1%;
-}
-
-.container tr:nth-child(odd){
-    background-color: #323c50;
-}
-
-.container tr:nth-child(even){
-    background-color: #2c3446;
-}
-
-.container th{
-    background-color: #1F2739;
-}
-
-.container td:first-child{
-    color: #FB667A;
+    
+    font-size: 15px;
+    border: 1px solid rgb(177, 177, 177);
+    padding-left: 20px;
+    
 }
