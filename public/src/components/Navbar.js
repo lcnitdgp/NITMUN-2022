@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="navbar">
         <div className="menu">
           <h3 className="logo">Mayank<span>Rana</span></h3>
-          <div className="hamburger-menu">
+          <div className="hamburger-menu" onClick={Toggle}>
             <div className="bar"></div>
           </div>
         </div>
@@ -35,8 +35,24 @@ const Navbar = () => {
         <div className="shadow one"></div>
         <div className="shadow two"></div>
       </div>
-
-      
+      {/* <div className='links'>
+        <ul>
+          <li>
+            <a href='/'>Home</a>
+          </li>
+          <li>
+            <a href='/aboutNitmun'>About Nitmun</a>
+          </li>
+          <li>
+            <a href='/signup'>Register</a>
+          </li>
+          <li>
+            <a href='/signup'>Register</a>
+          </li>
+          
+        </ul>
+      </div>
+       */}
     </div>
     </div>
   )
@@ -45,8 +61,12 @@ const Navbar = () => {
 const hamburger_menu = document.querySelector(".hamburger-menu");
 const container = document.querySelector(".container");
 
-hamburger_menu.addEventListener("click", () => {
-  container.classList.toggle("active");
-});
+// window.hamburger_menu.addEventListener("click", () => {
+//   container.classList.toggle("active");
+// });
+
+const Toggle=("click",()=>{
+  container.classList.toggle("active")
+})
 
 export default Navbar;

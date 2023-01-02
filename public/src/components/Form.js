@@ -1,34 +1,74 @@
-import React from "react";
+import React, { Children,useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import "./Form.css";
+import "./Form.css"
+import axios from "axios"
 
 const Form = () => {
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      username: Yup.string().required("required"),
-      password: Yup.string().required("required"),
-    }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  
+//   const response = axios.post('/api/register', {
+// 	name: 'John Doe',
+// });
+//  console.log(response.data);
+
+//  const form= document.querySelector("form")
+//  if (form) {
+//   form.addEventListener("submit", (e) => {
+//     e.preventDefault();
+//     const formData = new FormData(form);
+//     axios
+//       .post("/update-profile", formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       })
+//       .then((res) => {
+//         console.log(res);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+    
+//   });
+// }
+const [username, setUsername] = useState("");
+const [password, setPassword] = useState("");
+
+const handleSubmit=  async (e) =>{
+  e.preventDefault();
+  if(! (username && password)){
+    console.log("Please fill out all fields.");
+    return;
+  }
+  await axios
+      .post(`/signup`, {
+        username: username,
+        password: password,
+       
+      })
+      .then((res) => {
+        console.log("Submitted, thank you!");
+      })
+}
+  function loginFunction(){
+    window.location= "/api/dashboard"
+    console.log("Clicked")
+  }
   return (
+    <>
     <body>
       <div class="login-box">
         <h2>ADMIN</h2>
-        <form class="form" method="post" onSubmit={formik.handleSubmit}>
+        <form class="form" onSubmit={handleSubmit}>
           <div class="user-box">
             <input
               type="text"
               name="username"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+              required
             />
             <label>Username</label>
           </div>
@@ -36,22 +76,27 @@ const Form = () => {
             <input
               type="password"
               name="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              required
             />
             <label>Password</label>
           </div>
-          <a type="submit">
+          {/* <a type="submit">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             Submit
-          </a>
+          </a> */}
+          <button id="login" onClick={handleSubmit}>Payment Details</button>
         </form>
+        
       </div>
     </body>
+    </>
   );
 };
 

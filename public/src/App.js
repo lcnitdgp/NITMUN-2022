@@ -1,27 +1,23 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Form from './components/Form';
-//import Dashboard from './components/dashboard';
-//import Timer from './components/Timer';
-//import Formc from './components/Formc';
-//import Footer from './components/Footer';
-//import {Bookmark,IconBrand, Page, Search, Watermark} from './components/Cards'
-//import Gallery from './components/Gallery';
-import Carrds from './components/Carrds';
-//import SingleProject from './components/Cardds';
-//import SingleProject from './components/Cardds';
-//import Gallery from './components/Gallery';
-//import Video from './components/video';
-//import Navbar from './components/Navbar';
+import Payment from './components/Payment';
+import Dashboard from './components/dashboard';
+
 
 function App() {
   return (
     <div className="App">
-     <Form />
-        
-        <Carrds />
+       <Router>
+      <Routes>
+        <Route exact path="/signup" element={<Form />} />
+        <Route path="/api/dashboard" element={<Dashboard />} />
+        <Route path="/api/payments" element={<Payment/>} />
+      </Routes>
       
-      
+    </Router>
+       
     </div>
   );
 }
