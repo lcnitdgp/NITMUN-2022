@@ -41,7 +41,7 @@ const handleSubmit=  async (e) =>{
     return;
   }
   await axios
-      .post(`/signup`, {
+      .post(`http://localhost:5000/api/signup`, {
         username: username,
         password: password,
        

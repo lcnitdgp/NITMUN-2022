@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const {reqauth, checkuser} = require('../middleware/authpass')
 router.use(bodyParser.urlencoded({extended:false}));
 
+//https://in.pinterest.com/pin/76561262407011321/
+
 
 
 router.post("/register", async (req,res) => {
@@ -35,6 +37,19 @@ router.post("/register", async (req,res) => {
     
 })
 
+router.get("/registration", async(req,res) =>{
+    
+        try {
+          const Registrations = await registrations.find();
+          console.log(Registrations);
+          res.status(200).json(Registrations);
+        } catch (err) {
+          res.status(500).json(err);
+        }
+   
+      
+      
+})
 //alloting portfolio
 router.post("/updateportfolio/:id", async(req,res)=>{
     try{
@@ -57,9 +72,9 @@ router.post("/updateportfolio/:id", async(req,res)=>{
 
 
 //alloting committee
-router.post("/updatecommittee/:id", async(req,res)=>{
+router.post("/updatecommittee/:name", async(req,res)=>{
     try{
-         await registrations.findOneAndUpdate({_id:req.params.id},{
+         await registrations.findOneAndUpdate({_name:req.params.name},{
           
             
             $set:{committeeAlloted: req.body.committeeAlloted}
