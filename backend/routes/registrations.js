@@ -19,6 +19,8 @@ router.post("/register", async (req,res) => {
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             institute: req.body.institute,
+            year: req.body.year,
+            roll: req.body.roll,
             committee1: req.body.committee1,
             preference1: req.body.preference1,
             committee2: req.body.committee2,
@@ -72,9 +74,9 @@ router.post("/updateportfolio/:id", async(req,res)=>{
 
 
 //alloting committee
-router.post("/updatecommittee/:name", async(req,res)=>{
+router.post("/updatecommittee/:id", async(req,res)=>{
     try{
-         await registrations.findOneAndUpdate({_name:req.params.name},{
+         await registrations.findOneAndUpdate({_id:req.params.id},{
           
             
             $set:{committeeAlloted: req.body.committeeAlloted}

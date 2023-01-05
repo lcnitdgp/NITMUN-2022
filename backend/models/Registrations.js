@@ -22,6 +22,15 @@ const RegistrationSchema = new mongoose.Schema({
         type: String, 
         required: true,
     },
+    year:{
+        type: String,
+        
+    },
+    roll:{
+        type: String,
+        
+    },
+    
     committee1:{
      type: String,
      required: true,
