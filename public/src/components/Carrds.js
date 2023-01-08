@@ -62,7 +62,7 @@ const Carrds = () => {
           />
           <span class="cards--two__rect"></span>
           <span class="cards--two__tri"></span>
-          <p>Lucy Grace</p>
+          <p>Literary Circle</p>
           <ul class="cards__list">
             <li>
               <i class="fab fa-facebook-f"></i>
