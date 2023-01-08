@@ -14,6 +14,7 @@ const {JWT_SECRET}=require('../keys')
 
 const maxAge = 3 * 24 * 3600;
 const createtokens = (id) => {
+    console.log(id)
     return jwt.sign({ id }, JWT_SECRET, {
         expiresIn: maxAge
     })
@@ -34,7 +35,7 @@ router.post("/signup", async (req, res) => {
 
         console.log(admin);
         const token = createtokens(admin._id)
-        res.cookie('nitmun', token, { httpOnly: true, maxAge: maxAge * 1000 })
+        // res.cookie('nitmun', token, { httpOnly: true, maxAge: maxAge * 1000 })
         res.send(admin)
     } catch (err) {
         res.json(err);
@@ -68,9 +69,10 @@ router.post("/",(req,res)=>{
                 // const token = jwt.sign({_id:savedAdmin._id},JWT_SECRET);
                
                 const token = createtokens(savedAdmin._id)
-                res.json({token})
+                res.json(token)
+                console.log({token})
     
-            res.cookie('nitmun',token,{httpOnly: true, maxAge: maxAge * 1000})
+            // res.cookie('nitmun',token,{httpOnly: true, maxAge: maxAge * 1000})
             // res.status(201).render('home')
 
             }

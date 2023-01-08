@@ -8,7 +8,7 @@ const {google} = require("googleapis")
 const CLIENT_ID = '973450848403-c6bvogebh51s1t1d5p93uca1k08emibc.apps.googleusercontent.com'
 const CLIENT_SECRET = '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'
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-const REFRESH_TOKEN = '1//04JRwDCubBBavCgYIARAAGAQSNwF-L9IrhsDUU_sXCkZSlrPTvVxRKnhYLUG2o-OwzV-MMEpqt9X5i4WquNUNsbw27Ye1Kg0BmOY'
+const REFRESH_TOKEN = '1//04jzVWqJHTYvzCgYIARAAGAQSNwF-L9Ir9xiWnxRBdEWiMbwLfC1gq4O8HcwabMSQaGXeC35yEdoRMKHRvRGmfvpRM0pEQjHM7L4'
 // const OAuth2 = google.auth.OAuth2;
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URI)
@@ -25,7 +25,7 @@ router.post("/allotmentmail/:id", async (req,res)=>{
                 status: "PAYMENT PENDING"
             } 
            
-        }).then(()=>{
+        }).then(()=>{ 
            console.log(req.params.id)
         }).catch(err=>{console.log(err)})
         let accessToken = await oAuth2Client.getAccessToken()
@@ -35,7 +35,7 @@ router.post("/allotmentmail/:id", async (req,res)=>{
             service: 'gmail',
             auth: {
             type: 'OAuth2',
-            user: 'richaroydps@gmail.com',
+            user: 'verve.nitmun@gmail.com',
             clientId: CLIENT_ID,
             clientSecret: CLIENT_SECRET,
             refreshToken: REFRESH_TOKEN,
@@ -48,15 +48,15 @@ router.post("/allotmentmail/:id", async (req,res)=>{
           console.log(transport)
           let p =0;
           if(participant.institute == "NIT Durgapur"){
-               p = 100;
+               p = 600;
           }
-          else  p = 250;
+          else  p = 1300;
         let info = await transport.sendMail({
-            from: '"Richa Roy" <richaroydps@gmail.com>', 
+            from: '"Literary Circle, NIT Durgapur" <verve.nitmun@gmail.com>', 
             to: participant.email, // list of receivers
             subject: "Registration confirmation", 
             text: ``, 
-            html: `Greetings <b>${participant.name}</b>,<br/><br/>Following your registration in <b>NITMUN XI</b>, you are requested to submit a registration fee of <b>Rs ${p}</b>.<br/>You may pay using UPI to the following people (UPI IDs provided below) :<br/><br/><b>Rohan Rao</b> - rohanrao.dec11@okhdfcbank (+91 83370 74141)<br/><b>Aditya Mitra</b> - adityamitra1911@okicici (+91 93310 55168)<br/><br/>Please mention NITMUN X- ( your name ) - ( institution ) while sending it. <br/>Let us know when and to whom you have made the payment, via mail. Kindly <b>attach a screenshot</b> of the payment record to the email.<br/><br/>Regards,<br/>Rohan Rao,<br/>Under Secretary General,<br/>NITMUN X.<br/>Contact number - +91 83370 74141`, 
+            html: `Greetings <b>${participant.name}</b>,<br/><br/>Following your registration in <b>NITMUN XI</b>, you are requested to submit a registration fee of <b>Rs ${p}</b>.<br/>You may pay using UPI to the following people (UPI IDs provided below) :<br/><br/><b>Pushpal Ghodaskar</b> - pushpalghodaskar-1@okaxis (+91 80556 28645)<br/><b>Archit Lall</b> - archit10dgp@oksbi (+91 91446 48481)<br/><br/>Please mention NITMUN XI- ( your name ) - ( institution ) while sending it. <br/>Let us know when and to whom you have made the payment, via mail. Kindly <b>attach a screenshot</b> of the payment record to the email.<br/><br/>Regards,<br/>Archit Lall,<br/>Under Secretary General,<br/>NITMUN XI.<br/>Contact number - +91 91446 48481`, 
             
           });
         console.log("Message sent: %s", info.messageId);
@@ -91,7 +91,7 @@ router.post("/paymentmail/:id", async (req,res)=>{
             service: 'gmail',
             auth: {
             type: 'OAuth2',
-            user: 'richaroydps@gmail.com',
+            user: 'verve.nitmun@gmail.com',
             clientId: CLIENT_ID,
             clientSecret: CLIENT_SECRET,
             refreshToken: REFRESH_TOKEN,
@@ -103,16 +103,12 @@ router.post("/paymentmail/:id", async (req,res)=>{
           });
           console.log(transport)
           let info = await transport.sendMail({
-            from: '"NITMUN XI" <richaroydps@gmail.com>', 
+            from: '"Literary Circle, NIT Durgapur" <verve.nitmun@gmail.com>', 
             to: participant.email, // list of receivers
             subject: "Payment Confirmation ", 
             text: "",
-            html: `Dear <b>${participant.name}</b>,<br/><br/>Your payment has been received. The payment confirmation letter has been attached to this mail.<br/> <br/>Regards,<br/>Aditya Mitra,<br/>Deputy Director General,<br/>NITMUN X.<br/>Contact - 9331055168.`, 
-            // attachments: [{
-            //     filename: 'Payment confirmation.pdf',
-            //     path: __dirname + "/../attachment/Payment confirmation.pdf",
-            //     contentType: 'application/pdf'
-            //   }],
+            html: `Dear <b>${participant.name}</b>,<br/><br/>Your payment has been received.We look forward to hosting you.<br/> <br/>Regards,<br/>Puspal Ghodaskar,<br/>Deputy Director General,<br/>NITMUN XI.<br/>Contact - 8055628645.`, 
+           
           });
         console.log("Message sent: %s", info.messageId);
         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));

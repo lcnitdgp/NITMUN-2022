@@ -190,8 +190,7 @@ router.get("/payments", async(req,res)=>{
          paymentDetails.map(payment=>{
              paymentList.push(payment)
          })
-        res.status(200).json(paymentList)
-        res.render('payment',{title: 'payment',paymentList:paymentList });
+        res.status(200).json(paymentList).render('payment',{title: 'payment',paymentList:paymentList });
     }catch(err){
         res.status(500).json(err)
     }

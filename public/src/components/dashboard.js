@@ -19,7 +19,10 @@ function Dashboard() {
   const [institutef, setInstitutef] = useState("");
   const [yearf, setYearf] = useState("");
   const [Allotedmail, setAllotedmail] = useState("");
+  const[paymentupdate,setPaymentupdate]=useState("");
   const [paid,setPaid]=useState(false);
+  const [paidto, setPaidto] = useState([{}]);
+  const [amount, setAmount] = useState([{}]);
   
 
   // function both(user){
@@ -90,7 +93,7 @@ function Dashboard() {
           Allotedmail: true,  
         })
         .then((res) => {
-          setAllotedmail(true);
+          // setAllotedmail(true);
           console.log("Submitted, thank you!");
         });
     };
@@ -98,11 +101,36 @@ function Dashboard() {
       e.preventDefault();
 
       await axios
+        .post(`http://localhost:5000/api/updatepaid/${user._id}`, {
+          paymentupdate: true,  
+        })
+        .then((res) => {
+          // setPaymentupdate(true);
+          console.log("Submitted, thank you!");
+        });
+    };
+    const handleSubmit4 = async (e) => {
+      e.preventDefault();
+
+      await axios
         .post(`http://localhost:5000/api/paymentmail/${user._id}`, {
           paid: true,  
         })
         .then((res) => {
-          setAllotedmail(true);
+          // setPaymentupdate(true);
+          console.log("Submitted, thank you!");
+        });
+    };
+    const handleSubmit5 = async (e) => {
+      e.preventDefault();
+
+      await axios
+        .post(`http://localhost:5000/apipayments/${user._id}`, {
+        paidto : paidto,
+        amount : amount
+        })
+        .then((res) => {
+          // setPaymentupdate(true);
           console.log("Submitted, thank you!");
         });
     };
@@ -158,25 +186,57 @@ function Dashboard() {
             name="portfolioAlloted"
             id="portfolioAlloted"
           />
-          <button type="submit" id="save" onClick={handleSubmit2}>Save</button>
+          <button type="submit" id="save" onClick={handleSubmit1}>Save</button>
         </td>
         <td></td>
         <td>
           <button type="submit" id="save" onClick={handleSubmit2} style={
-                  Allotedmail == true
-                    ? { display: "none" }
-                    : { display: "block" }
+                  user.Allotedmail != true
+                    ? { display: "block" }
+                    : { display: "none" }
                 }>
            Allotment mail 
           </button>
-        </td>
-        <td><button type="submit" id="save" onClick={handleSubmit3} style={
-                  paid == true
-                    ? { display: "none" }
-                    : { display: "block" }
+          <button type="submit" id="save" onClick={handleSubmit3} style={
+                  user.Allotedmail == true && user.paymentupdate!=true
+                    ? { display: "block" }
+                    : { display: "none" }
                 }>
-           Confirmation Mail 
-          </button></td>
+
+           Allotment mail 
+          </button>
+          
+          <button type="submit" id="save" onClick={handleSubmit4} style={
+                  user.Paymentupdate == true && user.paid != true
+                    ? { display: "block" }
+                    : { display: "none" }
+                }>
+           Confirm payment 
+          </button>
+          <button type="submit" id="save"  style={
+                  user.paid==true
+                    ? { display: "block" }
+                    : { display: "none" }
+                }>
+           Registration Complete
+          </button>
+        </td>
+        <td>
+          <form>
+            <label>Amount</label>
+            <input type="number"  name=  "amount" required value={amount}
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}></input>
+            <label>Paid To</label>
+            <input type="text" name= "paidto" id=""
+            value={paidto}
+            onChange={(e) => {
+              setPaidto(e.target.value);
+            }}></input>
+            <button class="saveBtn" onClick={handleSubmit5}>save</button>
+          </form>
+        </td>
       </tr>
     );
   });
@@ -186,7 +246,7 @@ function Dashboard() {
       .map((user) => {
         const handleSubmit = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updatecommittee/${user._id}`, {
               committeeAlloted: committeeAlloted,
@@ -197,7 +257,7 @@ function Dashboard() {
         };
         const handleSubmit1 = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updateportfolio/${user._id}`, {
               portfolioAlloted: portfolioAlloted,
@@ -206,7 +266,44 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
-
+        const handleSubmit2 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/allotmentmail/${user._id}`, {
+              Allotedmail: true,  
+            })
+            .then((res) => {
+              // setAllotedmail(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit3 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/updatepaid/${user._id}`, {
+              paymentupdate: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit4 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/paymentmail/${user._id}`, {
+              paid: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+    
+    
         return (
           <tr>
             <td>{user.name}</td>
@@ -257,10 +354,41 @@ function Dashboard() {
                 name="portfolioAlloted"
                 id="portfolioAlloted"
               />
-
-              <button type="submit" id="save" onClick={handleSubmit1}>
-                Save
+              <button type="submit" id="save" onClick={handleSubmit1}>Save</button>
+            </td>
+            <td></td>
+            <td>
+              <button type="submit" id="save" onClick={handleSubmit2} style={
+                      user.Allotedmail != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Allotment mail 
               </button>
+              
+              <button type="submit" id="save" onClick={handleSubmit4} style={
+                      user.Paymentupdate == true && user.paid != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Confirm payment 
+              </button>
+              <button type="submit" id="save"  style={
+                      user.paid==true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Registration Complete
+              </button>
+            </td>
+            <td>
+              <form>
+                <label>Amount</label>
+                <input type="number"  name=  "amount" required></input>
+                <label>Paid To</label>
+                <input type="text" name= "paidto" id=""></input>
+                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+              </form>
             </td>
           </tr>
         );
@@ -272,7 +400,7 @@ function Dashboard() {
       .map((user) => {
         const handleSubmit = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updatecommittee/${user._id}`, {
               committeeAlloted: committeeAlloted,
@@ -283,7 +411,7 @@ function Dashboard() {
         };
         const handleSubmit1 = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updateportfolio/${user._id}`, {
               portfolioAlloted: portfolioAlloted,
@@ -292,7 +420,44 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
-
+        const handleSubmit2 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/allotmentmail/${user._id}`, {
+              Allotedmail: true,  
+            })
+            .then((res) => {
+              // setAllotedmail(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit3 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/updatepaid/${user._id}`, {
+              paymentupdate: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit4 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/paymentmail/${user._id}`, {
+              paid: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+    
+    
         return (
           <tr>
             <td>{user.name}</td>
@@ -343,10 +508,41 @@ function Dashboard() {
                 name="portfolioAlloted"
                 id="portfolioAlloted"
               />
-
-              <button type="submit" id="save" onClick={handleSubmit1}>
-                Save
+              <button type="submit" id="save" onClick={handleSubmit1}>Save</button>
+            </td>
+            <td></td>
+            <td>
+              <button type="submit" id="save" onClick={handleSubmit2} style={
+                      user.Allotedmail != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Allotment mail 
               </button>
+              
+              <button type="submit" id="save" onClick={handleSubmit4} style={
+                      user.Paymentupdate == true && user.paid != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Confirm payment 
+              </button>
+              <button type="submit" id="save"  style={
+                      user.paid==true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Registration Complete
+              </button>
+            </td>
+            <td>
+              <form>
+                <label>Amount</label>
+                <input type="number"  name=  "amount" required></input>
+                <label>Paid To</label>
+                <input type="text" name= "paidto" id=""></input>
+                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+              </form>
             </td>
           </tr>
         );
@@ -358,7 +554,7 @@ function Dashboard() {
       .map((user) => {
         const handleSubmit = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updatecommittee/${user._id}`, {
               committeeAlloted: committeeAlloted,
@@ -369,7 +565,7 @@ function Dashboard() {
         };
         const handleSubmit1 = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updateportfolio/${user._id}`, {
               portfolioAlloted: portfolioAlloted,
@@ -378,7 +574,44 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
-
+        const handleSubmit2 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/allotmentmail/${user._id}`, {
+              Allotedmail: true,  
+            })
+            .then((res) => {
+              // setAllotedmail(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit3 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/updatepaid/${user._id}`, {
+              paymentupdate: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit4 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/paymentmail/${user._id}`, {
+              paid: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+    
+    
         return (
           <tr>
             <td>{user.name}</td>
@@ -429,10 +662,41 @@ function Dashboard() {
                 name="portfolioAlloted"
                 id="portfolioAlloted"
               />
-
-              <button type="submit" id="save" onClick={handleSubmit1}>
-                Save
+              <button type="submit" id="save" onClick={handleSubmit1}>Save</button>
+            </td>
+            <td></td>
+            <td>
+              <button type="submit" id="save" onClick={handleSubmit2} style={
+                      user.Allotedmail != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Allotment mail 
               </button>
+              
+              <button type="submit" id="save" onClick={handleSubmit4} style={
+                      user.Paymentupdate == true && user.paid != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Confirm payment 
+              </button>
+              <button type="submit" id="save"  style={
+                      user.paid==true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Registration Complete
+              </button>
+            </td>
+            <td>
+              <form>
+                <label>Amount</label>
+                <input type="number"  name=  "amount" required></input>
+                <label>Paid To</label>
+                <input type="text" name= "paidto" id=""></input>
+                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+              </form>
             </td>
           </tr>
         );
@@ -444,7 +708,7 @@ function Dashboard() {
       .map((user) => {
         const handleSubmit = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updatecommittee/${user._id}`, {
               committeeAlloted: committeeAlloted,
@@ -455,7 +719,7 @@ function Dashboard() {
         };
         const handleSubmit1 = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updateportfolio/${user._id}`, {
               portfolioAlloted: portfolioAlloted,
@@ -464,7 +728,44 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
-
+        const handleSubmit2 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/allotmentmail/${user._id}`, {
+              Allotedmail: true,  
+            })
+            .then((res) => {
+              // setAllotedmail(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit3 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/updatepaid/${user._id}`, {
+              paymentupdate: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit4 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/paymentmail/${user._id}`, {
+              paid: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+    
+    
         return (
           <tr>
             <td>{user.name}</td>
@@ -515,16 +816,196 @@ function Dashboard() {
                 name="portfolioAlloted"
                 id="portfolioAlloted"
               />
-
-              <button type="submit" id="save" onClick={handleSubmit1}>
-                Save
-              </button>
+              <button type="submit" id="save" onClick={handleSubmit1}>Save</button>
             </td>
             <td></td>
             <td>
-              <button type="submit" id="Payment Mail"></button>
+              <button type="submit" id="save" onClick={handleSubmit2} style={
+                      user.Allotedmail != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Allotment mail 
+              </button>
+              
+              <button type="submit" id="save" onClick={handleSubmit4} style={
+                      user.Paymentupdate == true && user.paid != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Confirm payment 
+              </button>
+              <button type="submit" id="save"  style={
+                      user.paid==true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Registration Complete
+              </button>
+            </td>
+            <td>
+              <form>
+                <label>Amount</label>
+                <input type="number"  name=  "amount" required></input>
+                <label>Paid To</label>
+                <input type="text" name= "paidto" id=""></input>
+                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+              </form>
+            </td>
+          </tr>
+        );
+      });
+  }
+  if (institutef) {
+    datas = data
+      .filter((data) => data.institute == institutef)
+      .map((user) => {
+        const handleSubmit = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/updatecommittee/${user._id}`, {
+              committeeAlloted: committeeAlloted,
+            })
+            .then((res) => {
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit1 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/updateportfolio/${user._id}`, {
+              portfolioAlloted: portfolioAlloted,
+            })
+            .then((res) => {
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit2 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/allotmentmail/${user._id}`, {
+              Allotedmail: true,  
+            })
+            .then((res) => {
+              // setAllotedmail(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit3 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/updatepaid/${user._id}`, {
+              paymentupdate: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit4 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/paymentmail/${user._id}`, {
+              paid: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+    
+    
+        return (
+          <tr>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>{user.phoneNumber}</td>
+            <td>{user.institute}</td>
+            <td>{user.year}</td>
+            <td>{user.roll}</td>
+            <td>{user.committee1}</td>
+            <td>{user.preference1}</td>
+            <td>{user.committee2}</td>
+            <td>{user.preference2}</td>
+            <td>{user.committee3}</td>
+            <td>{user.preference3}</td>
+            <td>{user.committeeAlloted}</td>
+            <td>{user.portfolioAlloted}</td>
+            <td>{user.experience}</td>
+            <td>
+              <form class="">
+                <select
+                  name="committeeAlloted"
+                  id="committee"
+                  className="input"
+                  onChange={(e) => {
+                    setCommitteeAlloted(e.target.value);
+                  }}
+                >
+                  <option value="">Committees</option>
+                  <option value="AIPPM">AIPPM</option>
+                  <option value="UNGA">UNGA</option>
+                  <option value="UNSC">UNSC</option>
+                  <option value="IP">IP</option>
+                </select>
+                <button type="submit" id="save" onClick={handleSubmit}>
+                  Save
+                </button>
+              </form>
             </td>
             
+            {/* ()=> {handleSubmit() && setName(user.name)}   */}
+            <td>
+              <input
+                type="text"
+                value={portfolioAlloted}
+                onChange={(e) => {
+                  setPortfolioAlloted(e.target.value);
+                }}
+                name="portfolioAlloted"
+                id="portfolioAlloted"
+              />
+              <button type="submit" id="save" onClick={handleSubmit1}>Save</button>
+            </td>
+            <td></td>
+            <td>
+              <button type="submit" id="save" onClick={handleSubmit2} style={
+                      user.Allotedmail != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Allotment mail 
+              </button>
+              
+              <button type="submit" id="save" onClick={handleSubmit4} style={
+                      user.Paymentupdate == true && user.paid != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Confirm payment 
+              </button>
+              <button type="submit" id="save"  style={
+                      user.paid==true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Registration Complete
+              </button>
+            </td>
+            <td>
+              <form>
+                <label>Amount</label>
+                <input type="number"  name=  "amount" required></input>
+                <label>Paid To</label>
+                <input type="text" name= "paidto" id=""></input>
+                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+              </form>
+            </td>
           </tr>
         );
       });
@@ -535,7 +1016,7 @@ function Dashboard() {
       .map((user) => {
         const handleSubmit = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updatecommittee/${user._id}`, {
               committeeAlloted: committeeAlloted,
@@ -546,7 +1027,7 @@ function Dashboard() {
         };
         const handleSubmit1 = async (e) => {
           e.preventDefault();
-
+    
           await axios
             .post(`http://localhost:5000/api/updateportfolio/${user._id}`, {
               portfolioAlloted: portfolioAlloted,
@@ -555,7 +1036,44 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
-
+        const handleSubmit2 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/allotmentmail/${user._id}`, {
+              Allotedmail: true,  
+            })
+            .then((res) => {
+              // setAllotedmail(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit3 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/updatepaid/${user._id}`, {
+              paymentupdate: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+        const handleSubmit4 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/paymentmail/${user._id}`, {
+              paid: true,  
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
+    
+    
         return (
           <tr>
             <td>{user.name}</td>
@@ -606,10 +1124,41 @@ function Dashboard() {
                 name="portfolioAlloted"
                 id="portfolioAlloted"
               />
-
-              <button type="submit" id="save" onClick={handleSubmit1}>
-                Save
+              <button type="submit" id="save" onClick={handleSubmit1}>Save</button>
+            </td>
+            <td></td>
+            <td>
+              <button type="submit" id="save" onClick={handleSubmit2} style={
+                      user.Allotedmail != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Allotment mail 
               </button>
+              
+              <button type="submit" id="save" onClick={handleSubmit4} style={
+                      user.Paymentupdate == true && user.paid != true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Confirm payment 
+              </button>
+              <button type="submit" id="save"  style={
+                      user.paid==true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+               Registration Complete
+              </button>
+            </td>
+            <td>
+              <form>
+                <label>Amount</label>
+                <input type="number"  name=  "amount" required></input>
+                <label>Paid To</label>
+                <input type="text" name= "paidto" id=""></input>
+                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+              </form>
             </td>
           </tr>
         );
@@ -639,6 +1188,7 @@ function Dashboard() {
                 setInstitutef(e.target.value);
               }}>
                 <option value="NIT Durgapur">NIT Durgapur</option>
+                <option value="other">other</option>
               </select>
             </th>
             <th>
@@ -696,10 +1246,10 @@ function Dashboard() {
                   setCommitteef3(e.target.value);
                 }}
               >
-                <option value="all">UNGA-DISEC</option>
-                <option value="all">UNGA-SPECPOL</option>
-                <option value="all">AIPPM</option>
-                <option value="all">IP</option>
+                <option value="UNGA-DISEC">UNGA-DISEC</option>
+                <option value="UNGA-SPECPOL">UNGA-SPECPOL</option>
+                <option value="AIPPM">AIPPM</option>
+                <option value="IP">IP</option>
               </select>
             </th>
             <th>Preferance 1</th>
@@ -734,10 +1284,6 @@ function Dashboard() {
             <th>Payment Mail</th>
             <th>
               Paid to
-              <select class="table-filter">
-                <option value="Archit">Archit</option>
-                <option value="Pushpal">Pushpal</option>
-              </select>
             </th>
             <th>Confirmation mail</th>
 

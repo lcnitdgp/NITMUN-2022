@@ -11,7 +11,7 @@ function App() {
     <div className="App">
        <Router>
       <Routes>
-        <Route exact path="/signup" element={<Form />} />
+        <Route exact path="/" element={<Form />} />
         <Route path="/api/dashboard" element={<Dashboard />} />
         <Route path="/api/payments" element={<Payment/>} />
       </Routes>
