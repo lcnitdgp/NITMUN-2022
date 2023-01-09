@@ -1,237 +1,866 @@
-import React from "react";
-import "./dashboard.css";
+import React, { useEffect, useState } from "react";
 
-const Dashboard = () => {
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import "./Forrmc.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+import { Button } from "react-scroll";
+import { CgWindows } from "react-icons/cg";
+
+const Formc = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [institute, setInstitute] = useState("NIT DURGAPUR");
+  const [committee1, setComittee1] = useState("");
+  const [preference1, setPreferences1] = useState("");
+  const [committee2, setComittee2] = useState("");
+  const [preference2, setPreferences2] = useState("");
+  const [committee3, setComittee3] = useState("");
+  const [preference3, setPreferences3] = useState("");
+  const [experience, setExperience] = useState("");
+  const [other, setOther] = useState("");
+  const [roll, setRoll] = useState("");
+  const [year, setYear] = useState("");
+
+  const postData = async (e) => {
+    e.preventDefault();
+
+    await axios.post("http://localhost:5000/api/register", {
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+
+      name: name,
+      email: email,
+      phoneNumber: phoneNumber,
+      institute: institute,
+      committee1: committee1,
+      preference1: preference1,
+      committee2: committee2,
+      preference2: preference2,
+      committee3: committee3,
+      preference3: preference3,
+      experience: experience,
+      year: year,
+      roll: roll,
+    })
+    .then((res) => {
+      console.log(res);
+      console.log("submit");
+      toast.success("Submitted.");
+      window.location("/")
+             //window.location.replace = "/";
+    })
+
+    .catch((err) => {
+     console.log("hello")
+     console.log(err)});
+     toast.error("Please enter correct credentials")
+  
+
+    
+  };
+
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+  const formik = useFormik({
+    initialValues: {
+      Name: "",
+      email: "",
+      phone: "",
+      institution: "NIT DURGAPUR",
+      committee1: "",
+      preference1: "",
+      committee2: "",
+      preference2: "",
+      committee3: "",
+      preference3: "",
+      experience: "",
+    },
+    validationSchema: Yup.object({
+      Name: Yup.string()
+        .max(15, "Must atleast be of 15 Characters")
+        .required("required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
+      phone: Yup.string().matches(phoneRegExp, "Phone Number not valid"),
+      experience: Yup.string().required("Required"),
+    }),
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+  const [checkI, setCheckI] = useState(true);
+  
+  //   const checkl = async (e)=>{
+  //       setCheckI(true),
+  //       setCheckII(false)
+  //   }
+  //   const checkl2 = async (e)=>{
+  //     setCheckII(true),
+  //     setCheckI(false)
+  // }
+
   return (
-    <div class="body-wrapper">
-      <table className="container">
-        <thead>
-          <tr>
-            <th>
-              <h1>Name</h1>
-            </th>
-            <th>
-              <h1>Amount</h1>
-            </th>
-            <th>
-              <h1>Paid</h1>
-            </th>
-            <th>
-              <h1>E-mail</h1>
-            </th>
-            <th>
-              <h1>Ph no.</h1>
-            </th>
-            <th>
-              <h1>Institute</h1>
-            </th>
-            <th>
-              <h1>Committee</h1>
-            </th>
-            <th>
-              <h1>Portfolio</h1>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Soumik Biswas</td>
-            <td>700</td>
-            <td>Yes</td>
-            <td>soumikjiswas@gmail.com</td>
-            <td>6290575119</td>
-            <td>National Institute Of Technology, Durgapur</td>
-            <td>UNGA</td>
-            <td>Republic of India</td>
-          </tr>
-          <tr>
-            <td>Soumik Biswas</td>
-            <td>700</td>
-            <td>Yes</td>
-            <td>soumikjiswas@gmail.com</td>
-            <td>6290575119</td>
-            <td>National Institute Of Technology, Durgapur</td>
-            <td>UNGA</td>
-            <td>Republic of India</td>
-          </tr>
-          <tr>
-            <td>Soumik Biswas</td>
-            <td>700</td>
-            <td>Yes</td>
-            <td>soumikjiswas@gmail.com</td>
-            <td>6290575119</td>
-            <td>National Institute Of Technology, Durgapur</td>
-            <td>UNGA</td>
-            <td>Republic of India</td>
-          </tr>
-        </tbody>
-      </table>
+    <div>
+      <div class="container">
+        <div class="login-container">
+          <input
+            id="item-1"
+            type="radio"
+            name="item"
+            class="sign-in"
+            checked={checkI}
+            onClick={() => setCheckI(true)}
+          />
+          <label for="item-1" class="item">
+            Delegate
+          </label>
+          <input
+            id="item-2"
+            type="radio"
+            name="item"
+            class="sign-up"
+            checked={!checkI}
+            onClick={() => setCheckI(false)}
+          />
+          <label for="item-2" class="item">
+            IP
+          </label>
+          <div class="login-form">
+            <form class="sign-in-htm" onSubmit={formik.handleSubmit}>
+              <div class="group">
+                <label for="firstname">Name11</label>
+                <input
+                  placeholder="Name"
+                  name="Name"
+                  id="Name"
+                  type="text"
+                  class="input"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+                {formik.touched.Name && formik.errors.Name ? (
+                  <div>{formik.errors.Name}</div>
+                ) : null}
+              </div>
+              <div class="group">
+                <label for="lastname">E-mail</label>
+                <input
+                  placeholder="Email"
+                  name="email"
+                  className="input"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={email}
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div>{formik.errors.email}</div>
+                ) : null}
+              </div>
+              <div class="group">
+                <label for="lastname">Phone Number</label>
+                <input
+                  placeholder="Phone"
+                  name="phone"
+                  className="input"
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={phoneNumber}
+                />
+                {formik.touched.phone && formik.errors.phone ? (
+                  <div>{formik.errors.phone}</div>
+                ) : null}
+              </div>
+              <div className="group">
+                <label for="lastname">Institution</label>
+
+                <select
+                  placeholder="Institution"
+                  type="text"
+                  className="input"
+                  name="institution"
+                  onChange={(e) => {
+                    setInstitute(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={institute}
+                >
+                  <option value="NIT DURGAPUR">NIT DURGAPUR</option>
+                  <option value={other}>Other Institutions</option>
+                </select>
+              </div>
+              <div
+                class="group"
+                style={
+                  institute == "NIT DURGAPUR"
+                    ? { display: "none" }
+                    : { display: "block" }
+                }
+              >
+                <label for="lastname">School/College</label>
+                <input
+                  placeholder="School/College"
+                  name="email"
+                  value={institute}
+                  onChange={(e) => {
+                    setInstitute(e.target.value);
+                  }}
+                  id="pass"
+                  type="text"
+                  class="input"
+                  data-type="text"
+                />
+              </div>
+              <div
+                class="group"
+                style={
+                  institute == "NIT DURGAPUR"
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                <label for="lastname">Roll Number</label>
+                <input
+                  placeholder="Roll Number"
+                  name="email"
+                  value={roll}
+                  onChange={(e) => {
+                    setRoll(e.target.value);
+                  }}
+                  id="pass"
+                  type="text"
+                  class="input"
+                  data-type="text"
+                />
+              </div>
+              <div
+                className="group"
+                style={
+                  institute == "NIT DURGAPUR"
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                <label for="lastname">Year</label>
+
+                <select
+                  placeholder="Institution"
+                  type="text"
+                  className="input"
+                  name="institution"
+                  onChange={(e) => {
+                    setYear(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={year}
+                >
+                  <option value="2023">First</option>
+                  <option value="other">other</option>
+                </select>
+              </div>
+
+              <br></br>
+              <h2>Preferences 1:</h2>
+              <br></br>
+
+              <div class="group">
+                <label for="Committee">Committee</label>
+                <select
+                  className="input"
+                  type="text"
+                  name="committee1"
+                  value={committee1}
+                  onChange={(e) => {
+                    setComittee1(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option defaultValue={"Select"}>Select</option>
+                  <option value="UNGA-DISEC">UNGA-DISEC</option>
+                  <option value="UNGA-SPECPOL">UNGA_SPECPOL</option>
+                  <option value="AIPPM">AIPPM</option>
+                </select>
+              </div>
+
+              <div
+                class="group"
+                style={
+                  committee1 == "" ? { display: "none" } : { display: "block" }
+                }
+              >
+                <label for="lastname">
+                  {committee1 == "AIPPM" ? "Personality" : "Country"}
+                </label>
+                <select
+                  className="input"
+                  type="text"
+                  name="preference1"
+                  value={preference1}
+                  onChange={(e) => {
+                    setPreferences1(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="China">China</option>
+                  <option value="UK">UK</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                </select>
+              </div>
+              <br></br>
+              <h2>Preferences 2:</h2>
+              <br></br>
+              <div className="group">
+                <label for="lastname">Committee</label>
+                <select
+                  className="input"
+                  type="text"
+                  name="committee2"
+                  onChange={(e) => {
+                    setComittee2(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={committee2}
+                >
+                  <option defaultValue={"Select"}>Select</option>
+                  <option
+                    value="UNGA-DISEC"
+                    style={
+                      committee1 == "UNGA-DISEC"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    UNGA-DISEC
+                  </option>
+                  <option
+                    value="UNGA-SPECPOL"
+                    style={
+                      committee1 == "UNGA-SPECPOL"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    UNGA_SPECPOL
+                  </option>
+                  <option
+                    value="AIPPM"
+                    style={
+                      committee1 == "AIPPM"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    AIPPM
+                  </option>
+                </select>
+              </div>
+              <div
+                class="group"
+                style={
+                  committee1 == "" ? { display: "none" } : { display: "block" }
+                }
+              >
+                <label for="lastname">
+                  {committee2 == "AIPPM" ? "Personality" : "Country"}
+                </label>
+                <select
+                  className="input"
+                  name="preference2"
+                  type="text"
+                  value={preference2}
+                  onChange={(e) => {
+                    setPreferences2(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="China">China</option>
+                  <option value="UK">UK</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                </select>
+              </div>
+              <br></br>
+              <h2>Preferences 3:</h2>
+              <br></br>
+              <div className="group">
+                <label for="lastname">Committee</label>
+                <select
+                  className="input"
+                  type="text"
+                  name="committee3"
+                  value={committee3}
+                  onChange={(e) => {
+                    setComittee3(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option defaultValue={"Select"}>Select</option>
+                  <option
+                    value="UNGA-DISEC"
+                    style={
+                      committee1 == "UNGA-DISEC" || committee2 == "UNGA-DISEC"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    UNGA-DISEC
+                  </option>
+                  <option
+                    value="UNGA-SPECPOL"
+                    style={
+                      committee1 == "UNGA-SPECPOL" ||
+                      committee2 == "UNGA-SPECPOL"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    UNGA_SPECPOL
+                  </option>
+                  <option
+                    value="AIPPM"
+                    style={
+                      committee1 == "AIPPM" || committee2 == "AIPPM"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    AIPPM
+                  </option>
+                </select>
+              </div>
+              <div
+                class="group"
+                style={
+                  committee1 == "" ? { display: "none" } : { display: "block" }
+                }
+              >
+                <label for="lastname">
+                  {committee1 == "AIPPM" ? "Personality" : "Country"}
+                </label>
+                <select
+                  className="input"
+                  name="preference2"
+                  type="text"
+                  value={preference3}
+                  onChange={(e) => {
+                    setPreferences3(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="China">China</option>
+                  <option value="UK">UK</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                </select>
+              </div>
+              <div className="group">
+                <label for="lastname">Experience</label>
+                <textarea
+                  className="input"
+                  id="message"
+                  type="text"
+                  name="experience"
+                  placeholder="Tell us about your experience"
+                  onChange={(e) => {
+                    setExperience(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={experience}
+                ></textarea>
+              </div>
+
+              <div class="group">
+                <button
+                  type="submit"
+                  class="buttons"
+                  value="Register"
+                  onClick={postData}
+                ><span> Register
+                </span></button>
+              </div>
+              
+            </form>
+            <form class="sign-up-htm" onSubmit={formik.handleSubmit}>
+            <div class="group">
+                <label for="firstname">Name11</label>
+                <input
+                  placeholder="Name"
+                  name="Name"
+                  id="Name"
+                  type="text"
+                  class="input"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+                {formik.touched.Name && formik.errors.Name ? (
+                  <div>{formik.errors.Name}</div>
+                ) : null}
+              </div>
+              <div class="group">
+                <label for="lastname">E-mail</label>
+                <input
+                  placeholder="Email"
+                  name="email"
+                  className="input"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={email}
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div>{formik.errors.email}</div>
+                ) : null}
+              </div>
+              <div class="group">
+                <label for="lastname">Phone Number</label>
+                <input
+                  placeholder="Phone"
+                  name="phone"
+                  className="input"
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={phoneNumber}
+                />
+                {formik.touched.phone && formik.errors.phone ? (
+                  <div>{formik.errors.phone}</div>
+                ) : null}
+              </div>
+              <div className="group">
+                <label for="lastname">Institution</label>
+
+                <select
+                  placeholder="Institution"
+                  type="text"
+                  className="input"
+                  name="institution"
+                  onChange={(e) => {
+                    setInstitute(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={institute}
+                >
+                  <option value="NIT DURGAPUR">NIT DURGAPUR</option>
+                  <option value={other}>Other Institutions</option>
+                </select>
+              </div>
+              <div
+                class="group"
+                style={
+                  institute == "NIT DURGAPUR"
+                    ? { display: "none" }
+                    : { display: "block" }
+                }
+              >
+                <label for="lastname">School/College</label>
+                <input
+                  placeholder="School/College"
+                  name="email"
+                  value={institute}
+                  onChange={(e) => {
+                    setInstitute(e.target.value);
+                  }}
+                  id="pass"
+                  type="text"
+                  class="input"
+                  data-type="text"
+                />
+              </div>
+              <div
+                class="group"
+                style={
+                  institute == "NIT DURGAPUR"
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                <label for="lastname">Roll Number</label>
+                <input
+                  placeholder="Roll Number"
+                  name="email"
+                  value={roll}
+                  onChange={(e) => {
+                    setRoll(e.target.value);
+                  }}
+                  id="pass"
+                  type="text"
+                  class="input"
+                  data-type="text"
+                />
+              </div>
+              <div
+                className="group"
+                style={
+                  institute == "NIT DURGAPUR"
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                <label for="lastname">Year</label>
+
+                <select
+                  placeholder="Institution"
+                  type="text"
+                  className="input"
+                  name="institution"
+                  onChange={(e) => {
+                    setYear(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={year}
+                >
+                  <option value="2023">First</option>
+                  <option value="other">other</option>
+                </select>
+              </div>
+
+              <br></br>
+              <h2>Preferences 1:</h2>
+              <br></br>
+
+              <div class="group">
+                <label for="Committee">Committee</label>
+                <select
+                  className="input"
+                  type="text"
+                  name="committee1"
+                  value={committee1}
+                  onChange={(e) => {
+                    setComittee1(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option defaultValue={"Select"}>Select</option>
+                  <option value="UNGA-DISEC-IP">UNGA-DISEC</option>
+                  <option value="UNGA-SPECPOL-IP">UNGA_SPECPOL</option>
+                  <option value="AIPPM-IP">AIPPM</option>
+                </select>
+              </div>
+
+              <div
+                class="group"
+                style={
+                  committee1 == "" ? { display: "none" } : { display: "block" }
+                }
+              >
+                <label for="lastname">
+                  News Agency
+                </label>
+                <select
+                  className="input"
+                  type="text"
+                  name="preference1"
+                  value={preference1}
+                  onChange={(e) => {
+                    setPreferences1(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="China">China</option>
+                  <option value="UK">UK</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                </select>
+              </div>
+              <br></br>
+              <h2>Preferences 2:</h2>
+              <br></br>
+              <div className="group">
+                <label for="lastname">Committee</label>
+                <select
+                  className="input"
+                  type="text"
+                  name="committee2"
+                  onChange={(e) => {
+                    setComittee2(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={committee2}
+                >
+                  <option defaultValue={"Select"}>Select</option>
+                  <option
+                    value="UNGA-DISEC-IP"
+                    
+                  >
+                    UNGA-DISEC-IP
+                  </option>
+                  <option
+                    value="UNGA-SPECPOL-IP"
+                    style={
+                      committee1 == "UNGA-SPECPOL-IP"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    UNGA-SPECPOL-IP
+                  </option>
+                  <option
+                    value="AIPPM-IP"
+                    style={
+                      committee1 == "AIPPM-IP"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    AIPPM-IP
+                  </option>
+                </select>
+              </div>
+              <div
+                class="group"
+                style={
+                  committee1 == "" ? { display: "none" } : { display: "block" }
+                }
+              >
+                <label for="lastname">
+                  News Agency
+                </label>
+                <select
+                  className="input"
+                  name="preference2"
+                  type="text"
+                  value={preference2}
+                  onChange={(e) => {
+                    setPreferences2(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="China">China</option>
+                  <option value="UK">UK</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                </select>
+              </div>
+              <br></br>
+              <h2>Preferences 3:</h2>
+              <br></br>
+              <div className="group">
+                <label for="lastname">Committee</label>
+                <select
+                  className="input"
+                  type="text"
+                  name="committee3"
+                  value={committee3}
+                  onChange={(e) => {
+                    setComittee3(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option defaultValue={"Select"}>Select</option>
+                  <option
+                    value="UNGA-DISEC-IP"
+                    style={
+                      committee1 == "UNGA-DISEC-IP" || committee2 == "UNGA-DISEC"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    UNGA-DISEC-IP
+                  </option>
+                  <option
+                    value="UNGA-SPECPOL-IP"
+                    style={
+                      committee1 == "UNGA-SPECPOL-IP" ||
+                      committee2 == "UNGA-SPECPOL-IP"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
+                    UNGA-SPECPOL-IP
+                  </option>
+                  <option
+                    value="AIPPM-IP"
+                  >
+                    AIPPM
+                  </option>
+                </select>
+              </div>
+              <div
+                class="group"
+                
+              >
+                <label for="lastname">
+                  News Agency
+                </label>
+                <select
+                  className="input"
+                  name="preference2"
+                  type="text"
+                  value={preference3}
+                  onChange={(e) => {
+                    setPreferences3(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="China">China</option>
+                  <option value="UK">UK</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                </select>
+              </div>
+              <div className="group">
+                <label for="lastname">Experience</label>
+                <textarea
+                  className="input"
+                  id="message"
+                  type="text"
+                  name="experience"
+                  placeholder="Tell us about your experience"
+                  onChange={(e) => {
+                    setExperience(e.target.value);
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={experience}
+                ></textarea>
+              </div>
+
+              <div class="group">
+                <button
+                  type="submit"
+                  class="buttons"
+                  value="Register"
+                  onClick={postData}
+                ><span> Register
+                </span></button>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+      <ToastContainer position="top-right" />
+      <Footer />
     </div>
   );
 };
 
-export default Dashboard;
-
-
-
-
-
-import * as React from 'react';
-import "./dashboard.css";
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import { color } from '@mui/system';
-import { red } from '@mui/material/colors';
-import { createTheme } from '@mui/material/styles';
-import blue from '@mui/material/colors/blue';
-
-const theme = createTheme({
-  palette: {
-    primary: blue,
-  },
-});
-
-const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    color: red,
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    color: red,
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    color: red,
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    color: red,
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: (value) => value.toFixed(2),
-  },
-];
-
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
-
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
-];
-
-export default function Dashboard() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer theme={theme} sx={{ maxHeight: 740, color:"#2caac9"}}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead className='table'>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-  );
-}
+export default Formc;

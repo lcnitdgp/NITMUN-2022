@@ -153,7 +153,7 @@ router.post("/payments/:id", async (req,res) => {
         });
         
         const payment = await newPayment.save();
-        res.redirect("/api/dashboard")
+        res.json(payment)
     } catch(err){
         res.status(500).json(err);
     }

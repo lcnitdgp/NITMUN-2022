@@ -62,6 +62,11 @@ function Dashboard() {
     window.location = "/api/payments";
     console.log("Clicked");
   }
+
+  if(committeef1=="ALL"||committeef2=="ALL"||committeef3=="ALL"||yearf=="ALL"||institutef=="ALL"||Alloted=="ALL"){
+    window.location("/");
+  }
+  
   let datas = data.map((user) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -125,7 +130,7 @@ function Dashboard() {
       e.preventDefault();
 
       await axios
-        .post(`http://localhost:5000/apipayments/${user._id}`, {
+        .post(`http://localhost:5000/api/payments/${user._id}`, {
         paidto : paidto,
         amount : amount
         })
@@ -302,6 +307,19 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
+        const handleSubmit5 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/payments/${user._id}`, {
+            paidto : paidto,
+            amount : amount
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
     
     
         return (
@@ -365,6 +383,14 @@ function Dashboard() {
                     }>
                Allotment mail 
               </button>
+              <button type="submit" id="save" onClick={handleSubmit3} style={
+                      user.Allotedmail == true && user.paymentupdate!=true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+    
+               Allotment mail 
+              </button>
               
               <button type="submit" id="save" onClick={handleSubmit4} style={
                       user.Paymentupdate == true && user.paid != true
@@ -384,10 +410,17 @@ function Dashboard() {
             <td>
               <form>
                 <label>Amount</label>
-                <input type="number"  name=  "amount" required></input>
+                <input type="number"  name=  "amount" required value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}></input>
                 <label>Paid To</label>
-                <input type="text" name= "paidto" id=""></input>
-                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+                <input type="text" name= "paidto" id=""
+                value={paidto}
+                onChange={(e) => {
+                  setPaidto(e.target.value);
+                }}></input>
+                <button class="saveBtn" onClick={handleSubmit5}>save</button>
               </form>
             </td>
           </tr>
@@ -456,6 +489,19 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
+        const handleSubmit5 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/payments/${user._id}`, {
+            paidto : paidto,
+            amount : amount
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
     
     
         return (
@@ -519,6 +565,14 @@ function Dashboard() {
                     }>
                Allotment mail 
               </button>
+              <button type="submit" id="save" onClick={handleSubmit3} style={
+                      user.Allotedmail == true && user.paymentupdate!=true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+    
+               Allotment mail 
+              </button>
               
               <button type="submit" id="save" onClick={handleSubmit4} style={
                       user.Paymentupdate == true && user.paid != true
@@ -538,10 +592,17 @@ function Dashboard() {
             <td>
               <form>
                 <label>Amount</label>
-                <input type="number"  name=  "amount" required></input>
+                <input type="number"  name=  "amount" required value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}></input>
                 <label>Paid To</label>
-                <input type="text" name= "paidto" id=""></input>
-                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+                <input type="text" name= "paidto" id=""
+                value={paidto}
+                onChange={(e) => {
+                  setPaidto(e.target.value);
+                }}></input>
+                <button class="saveBtn" onClick={handleSubmit5}>save</button>
               </form>
             </td>
           </tr>
@@ -610,6 +671,19 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
+        const handleSubmit5 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/payments/${user._id}`, {
+            paidto : paidto,
+            amount : amount
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
     
     
         return (
@@ -673,6 +747,14 @@ function Dashboard() {
                     }>
                Allotment mail 
               </button>
+              <button type="submit" id="save" onClick={handleSubmit3} style={
+                      user.Allotedmail == true && user.paymentupdate!=true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+    
+               Allotment mail 
+              </button>
               
               <button type="submit" id="save" onClick={handleSubmit4} style={
                       user.Paymentupdate == true && user.paid != true
@@ -692,10 +774,17 @@ function Dashboard() {
             <td>
               <form>
                 <label>Amount</label>
-                <input type="number"  name=  "amount" required></input>
+                <input type="number"  name=  "amount" required value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}></input>
                 <label>Paid To</label>
-                <input type="text" name= "paidto" id=""></input>
-                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+                <input type="text" name= "paidto" id=""
+                value={paidto}
+                onChange={(e) => {
+                  setPaidto(e.target.value);
+                }}></input>
+                <button class="saveBtn" onClick={handleSubmit5}>save</button>
               </form>
             </td>
           </tr>
@@ -764,6 +853,19 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
+        const handleSubmit5 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/payments/${user._id}`, {
+            paidto : paidto,
+            amount : amount
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
     
     
         return (
@@ -827,6 +929,14 @@ function Dashboard() {
                     }>
                Allotment mail 
               </button>
+              <button type="submit" id="save" onClick={handleSubmit3} style={
+                      user.Allotedmail == true && user.paymentupdate!=true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+    
+               Allotment mail 
+              </button>
               
               <button type="submit" id="save" onClick={handleSubmit4} style={
                       user.Paymentupdate == true && user.paid != true
@@ -846,10 +956,17 @@ function Dashboard() {
             <td>
               <form>
                 <label>Amount</label>
-                <input type="number"  name=  "amount" required></input>
+                <input type="number"  name=  "amount" required value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}></input>
                 <label>Paid To</label>
-                <input type="text" name= "paidto" id=""></input>
-                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+                <input type="text" name= "paidto" id=""
+                value={paidto}
+                onChange={(e) => {
+                  setPaidto(e.target.value);
+                }}></input>
+                <button class="saveBtn" onClick={handleSubmit5}>save</button>
               </form>
             </td>
           </tr>
@@ -918,6 +1035,19 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
+        const handleSubmit5 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/payments/${user._id}`, {
+            paidto : paidto,
+            amount : amount
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
     
     
         return (
@@ -981,6 +1111,14 @@ function Dashboard() {
                     }>
                Allotment mail 
               </button>
+              <button type="submit" id="save" onClick={handleSubmit3} style={
+                      user.Allotedmail == true && user.paymentupdate!=true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+    
+               Allotment mail 
+              </button>
               
               <button type="submit" id="save" onClick={handleSubmit4} style={
                       user.Paymentupdate == true && user.paid != true
@@ -1000,10 +1138,17 @@ function Dashboard() {
             <td>
               <form>
                 <label>Amount</label>
-                <input type="number"  name=  "amount" required></input>
+                <input type="number"  name=  "amount" required value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}></input>
                 <label>Paid To</label>
-                <input type="text" name= "paidto" id=""></input>
-                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+                <input type="text" name= "paidto" id=""
+                value={paidto}
+                onChange={(e) => {
+                  setPaidto(e.target.value);
+                }}></input>
+                <button class="saveBtn" onClick={handleSubmit5}>save</button>
               </form>
             </td>
           </tr>
@@ -1072,6 +1217,19 @@ function Dashboard() {
               console.log("Submitted, thank you!");
             });
         };
+        const handleSubmit5 = async (e) => {
+          e.preventDefault();
+    
+          await axios
+            .post(`http://localhost:5000/api/payments/${user._id}`, {
+            paidto : paidto,
+            amount : amount
+            })
+            .then((res) => {
+              // setPaymentupdate(true);
+              console.log("Submitted, thank you!");
+            });
+        };
     
     
         return (
@@ -1105,7 +1263,7 @@ function Dashboard() {
                   <option value="AIPPM">AIPPM</option>
                   <option value="UNGA">UNGA</option>
                   <option value="UNSC">UNSC</option>
-                  <option value="IP">IP</option>
+                  <option value="IP">IP-</option>
                 </select>
                 <button type="submit" id="save" onClick={handleSubmit}>
                   Save
@@ -1135,6 +1293,14 @@ function Dashboard() {
                     }>
                Allotment mail 
               </button>
+              <button type="submit" id="save" onClick={handleSubmit3} style={
+                      user.Allotedmail == true && user.paymentupdate!=true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }>
+    
+               Allotment mail 
+              </button>
               
               <button type="submit" id="save" onClick={handleSubmit4} style={
                       user.Paymentupdate == true && user.paid != true
@@ -1154,10 +1320,17 @@ function Dashboard() {
             <td>
               <form>
                 <label>Amount</label>
-                <input type="number"  name=  "amount" required></input>
+                <input type="number"  name=  "amount" required value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}></input>
                 <label>Paid To</label>
-                <input type="text" name= "paidto" id=""></input>
-                <button class="saveBtn" onClick={handleSubmit3}>save</button>
+                <input type="text" name= "paidto" id=""
+                value={paidto}
+                onChange={(e) => {
+                  setPaidto(e.target.value);
+                }}></input>
+                <button class="saveBtn" onClick={handleSubmit5}>save</button>
               </form>
             </td>
           </tr>
@@ -1187,6 +1360,7 @@ function Dashboard() {
               onChange={(e) => {
                 setInstitutef(e.target.value);
               }}>
+                <option value="ALL">ALL</option>
                 <option value="NIT Durgapur">NIT Durgapur</option>
                 <option value="other">other</option>
               </select>
@@ -1198,6 +1372,7 @@ function Dashboard() {
               onChange={(e) => {
                 setYearf(e.target.value);
               }}>
+                <option value="ALL">ALL</option>
                 <option value="1st Year">1st Year</option>
                 <option value="2nd Year">2nd Year</option>
                 <option value="3rd Year">3rd Year</option>
@@ -1214,6 +1389,7 @@ function Dashboard() {
                   setCommitteef1(e.target.value);
                 }}
               >
+                <option value="ALL">ALL</option>
                 <option value="UNGA-DISEC">UNGA-DISEC</option>
                 <option value="UNGA-SPECPOL">UNGA-SPECPOL</option>
                 <option value="AIPPM">AIPPM</option>
@@ -1230,7 +1406,8 @@ function Dashboard() {
                   setCommitteef2(e.target.value);
                 }}
               >
-                <option value="UNGA-DISEC">UNGA-DISEC</option>
+                
+                <option value="ALL">ALL</option><option value="UNGA-DISEC">UNGA-DISEC</option>
                 <option value="UNGA_SPECPOL">UNGA-SPECPOL</option>
                 <option value="AIPPM">AIPPM</option>
                 <option value="IP">IP</option>
@@ -1246,6 +1423,7 @@ function Dashboard() {
                   setCommitteef3(e.target.value);
                 }}
               >
+                <option value="ALL">ALL</option>
                 <option value="UNGA-DISEC">UNGA-DISEC</option>
                 <option value="UNGA-SPECPOL">UNGA-SPECPOL</option>
                 <option value="AIPPM">AIPPM</option>
@@ -1262,6 +1440,8 @@ function Dashboard() {
                   setAllotedCommittee(e.target.value);
                 }}
               >
+                
+                <option value="ALL">ALL</option>
                 <option value="UNGA-DISEC">UNGA-DISEC</option>
                 <option value="UNGA_SPECPOL">UNGA-SPECPOL</option>
                 <option value="AIPPM">AIPPM</option>
