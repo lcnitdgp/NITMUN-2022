@@ -57,7 +57,7 @@ const RegistrationSchema = new mongoose.Schema({
     },
     experience:{
         type: String,
-        required: true,
+        
         max: 80
     },
     committeeAlloted: {
