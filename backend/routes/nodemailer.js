@@ -107,7 +107,7 @@ router.post("/paymentmail/:id", async (req,res)=>{
             to: participant.email, // list of receivers
             subject: "Payment Confirmation ", 
             text: "",
-            html: `Dear <b>${participant.name}</b>,<br/><br/>Your payment has been received.We look forward to hosting you.<br/> <br/>Regards,<br/>Puspal Ghodaskar,<br/>Deputy Director General,<br/>NITMUN XI.<br/>Contact - 8055628645.`, 
+            html: `Dear <b>${participant.name}</b>,<br/><br/>Your payment has been received.We look forward to hosting you.<br/> <br/>Regards,<br/>Pushpal Ghodaskar,<br/>Deputy Director General,<br/>NITMUN XI.<br/>Contact - 8055628645.`, 
            
           });
         console.log("Message sent: %s", info.messageId);
