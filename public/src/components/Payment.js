@@ -39,7 +39,6 @@ function Payment() {
         <td>{user.paidto}</td>
         <td>{user.email}</td>
         <td>{user.phoneNumber}</td>
-        <td>{user.roll}</td>
         <td>{user.institute}</td>
         <td>{user.committeeAlloted}</td>
         <td>{user.portfolioAlloted}</td>
