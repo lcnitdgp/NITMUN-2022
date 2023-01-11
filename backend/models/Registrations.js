@@ -24,13 +24,17 @@ const RegistrationSchema = new mongoose.Schema({
     },
     year:{
         type: String,
+        required: true
         
     },
     roll:{
-        type: String,
-        
+        type: String,  
+        required: true
     },
-    
+    hall:{
+        type: String,
+        required: true
+    },
     committee1:{
      type: String,
      required: true,
@@ -56,8 +60,7 @@ const RegistrationSchema = new mongoose.Schema({
         required: true,
     },
     experience:{
-        type: String,
-        
+        type: String,  
         max: 80
     },
     committeeAlloted: {

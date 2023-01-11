@@ -21,6 +21,7 @@ router.post("/register", async (req,res) => {
             institute: req.body.institute,
             year: req.body.year,
             roll: req.body.roll,
+            hall: req.body.hall,
             committee1: req.body.committee1,
             preference1: req.body.preference1,
             committee2: req.body.committee2,
