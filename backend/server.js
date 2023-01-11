@@ -16,7 +16,7 @@ const {MONGOURI}= require('./keys.js')
 
 
 mongoose.connect(MONGOURI,{
-    useNewUrlParser : true , useUnifiedTopology: true,useCreateIndex: true, autoIndex: true
+    useNewUrlParser : true , useUnifiedTopology: true
 });
 mongoose.connection.on('connected',()=>{
     console.log('connected to DB');
