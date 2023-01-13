@@ -43,8 +43,11 @@ function Payment() {
         <td>{user.committeeAlloted}</td>
         <td>{user.portfolioAlloted}</td>
         <td>{user.Date}</td>
+        <td>{user.committee1}</td>
         <td>{user.preference1}</td>
+        <td>{user.committee2}</td>
         <td>{user.preference2}</td>
+        <td>{user.committee3}</td>
         <td>{user.preference3}</td>
       </tr>
     );
@@ -68,8 +71,11 @@ function Payment() {
             <th>Committee</th>
             <th>Portfolio</th>
             <th>Date</th>
+            <th>committee1</th>
             <th>Preference1</th>
+            <th>committee2</th>
             <th>Preference2</th>
+            <th>committee3</th>
             <th>Prefernce3</th>
           </tr>
         </thead>

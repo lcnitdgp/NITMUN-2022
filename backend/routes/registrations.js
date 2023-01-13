@@ -147,10 +147,12 @@ router.post("/payments/:id", async (req,res) => {
             committeeAlloted: participant.committeeAlloted,
             portfolioAlloted: participant.portfolioAlloted,
             Date: date.format(now,'DD/MM/YY HH:mm:ss'),
+            committee1: participant.committee1,
             preference1: participant.preference1,
+            committee2: participant.committee2,
             preference2: participant.preference2,
+            committee3: participant.committee3,
             preference3: participant.preference3
-       
         });
         
         const payment = await newPayment.save();

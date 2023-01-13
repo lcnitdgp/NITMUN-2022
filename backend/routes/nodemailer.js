@@ -5,10 +5,11 @@ const nodemailer = require("nodemailer");
 const {google} = require("googleapis")
 
 
-const CLIENT_ID = '973450848403-c6bvogebh51s1t1d5p93uca1k08emibc.apps.googleusercontent.com'
-const CLIENT_SECRET = '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'
+const CLIENT_ID = '460493599138-nqmt3ppr4nkdnigv73318k5fq1uic8f9.apps.googleusercontent.com'
+const CLIENT_SECRET = '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'
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-const REFRESH_TOKEN = '1//04jzVWqJHTYvzCgYIARAAGAQSNwF-L9Ir9xiWnxRBdEWiMbwLfC1gq4O8HcwabMSQaGXeC35yEdoRMKHRvRGmfvpRM0pEQjHM7L4'
+const REFRESH_TOKEN = '1//0467R2Cw_xJrnCgYIARAAGAQSNwF-L9IrkNXakvFj2zsQn8OhpV_bVdBdXaQ2noPbSyn8ivDj8fc1qx6K-SoVJ7rNCxILLGXru9o'
+
 // const OAuth2 = google.auth.OAuth2;
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URI)

@@ -41,13 +41,25 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         default: ""
        },
-       preference1:{
+    committee1:{
+        type: String,
+        required:true
+    },
+    preference1:{
         type: String,
         required: true,
+    },
+    committee2:{
+        type: String,
+        required:true
     },
     preference2:{
         type: String,
         required: true,
+    },
+    committee3:{
+        type: String,
+        required:true
     },
     preference3:{
         type: String,
